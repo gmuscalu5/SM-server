@@ -10,6 +10,8 @@ var mongoose = require('mongoose'),
 var GameSchema = new Schema({
     name: String,
     date: Date,
+    gym: String,
+    stats: String,
     round: {
         type: Schema.Types.ObjectId,
         ref: 'Round'
