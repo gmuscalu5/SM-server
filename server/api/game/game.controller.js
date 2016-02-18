@@ -7,9 +7,7 @@ var _ = require('lodash');
 var Game = require('./game.model');
 
 exports.index = function (req, res) {
-    console.log(req);
     Game.find(function (err, games) {
-        console.log(games);
         if (err) {
             return handleError(res, err);
         }
@@ -76,13 +74,25 @@ exports.destroy = function (req, res) {
     });
 };
 
-exports.findByRound = function (req, res) {
-    var query = {round: req.params.id};
+exports.findByRoundAndDate = function (req, res) {
+    var query = {$and: [{round: req.params.id}, {date: req.query.date}]};
+    console.log(query);
     Game.find(query).exec(function (err, games) {
         if(err){
             handleError(res, err);
         }else{
             res.send({success: games});
+        }
+    });
+};
+
+exports.findDatesByRound = function (req, res) {
+    var query = {round: req.params.id};
+    Game.distinct("date", query).exec(function (err, dates) {
+        if(err){
+            handleError(res, err);
+        }else{
+            res.send({success: dates});
         }
     });
 };

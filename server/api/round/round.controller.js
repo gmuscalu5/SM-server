@@ -7,9 +7,7 @@ var _ = require('lodash');
 var Round = require('./round.model');
 
 exports.index = function(req, res) {
-    console.log(req);
     Round.find(function (err, rounds) {
-        console.log(rounds);
         if(err) { return handleError(res, err); }
         return res.status(200).json(rounds);
     });
